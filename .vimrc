@@ -49,6 +49,7 @@ Plug 'ncm2/ncm2-path'
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'pangloss/vim-javascript'
 
 Plug 'jiangmiao/auto-pairs'
 
