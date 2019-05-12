@@ -52,6 +52,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'pangloss/vim-javascript'
 
 Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
 
 Plug 'Chiel92/vim-autoformat'
 
@@ -143,6 +144,9 @@ autocmd FileType c
 autocmd FileType js
 	\ setlocal tabstop=4 softtabstop=4 shiftwidth=4
 
+autocmd FileType json
+	\ setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
 " ====================================
 " # HOTKEYS
 " ====================================
@@ -209,9 +213,15 @@ inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
 
-" Use left & right arrow keys to switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
+" Use left & right arrow keys to switch vertical splits
+nnoremap <left> <C-w><left>
+nnoremap <right> <C-w><right>
+
+" Use Shift+left, Shift+right, Ctrl-left & Ctrl-right to resize vertical splits
+nnoremap <S-left> <C-w><
+nnoremap <S-right> <C-w>>
+nnoremap <C-left> 10<C-w><
+nnoremap <C-right> 10<C-w>>
 
 " Move up/down by line
 nnoremap j gj

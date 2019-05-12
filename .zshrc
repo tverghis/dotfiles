@@ -4,9 +4,6 @@
 # Path to your oh-my-zsh installation.
   export ZSH="/home/tverghis/.oh-my-zsh"
 
-# Set prompt
-  export PROMPT='%F{green}%B%1~%b%f $ '
-
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -101,7 +98,6 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias clion="/usr/bin/clion-2018.3.3/bin/clion.sh"
 export TERM=xterm-256color
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -114,3 +110,5 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 alias vim="nvim"
 alias vi="nvim"
 alias open="xdg-open"
+
+PROMPT='%F{green}%B%1~%b%f $ '
