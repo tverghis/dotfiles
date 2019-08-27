@@ -24,7 +24,6 @@ call plug#begin()
 
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
-Plug 'w0rp/ale'
 Plug 'machakann/vim-highlightedyank'
 
 " Fuzzy finding / navigation
@@ -33,17 +32,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Language support
-Plug 'autozimu/LanguageClient-neovim', {
-			\ 'branch': 'next',
-			\ 'do': 'bash install.sh',
-			\ }
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-
-" Completion plugins
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'zxqfl/tabnine-vim'
 
 " Syntax support
 Plug 'cespare/vim-toml'
@@ -53,6 +43,7 @@ Plug 'pangloss/vim-javascript'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
 
 Plug 'Chiel92/vim-autoformat'
 
@@ -70,61 +61,6 @@ let g:lightline = {
 function! LightlineFileName()
 	return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
-
-" Linter settings - only lint on save
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_save = 0
-let g:ale_lint_on_enter = 0
-let g:ale_rust_cargo_use_check = 1
-let g:ale_rust_cargo_check_all_targets = 1
-
-" ncm2 Completion
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"<C-y>"):"\<Tab>")
-inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
-
-" Language server
-let g:LanguageClient_serverCommands = {
-			\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-			\ 'javascript': ['javascript-typescript-stdio'],
-			\}
-let g:LanguageClientClient_autoStart = 1
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-" Improve errors
-let g:LanguageClient_diagnosticsDisplay = {
-			\     1: {
-			\         "name": "Error",
-			\         "texthl": "ALEError",
-			\         "signText": "✖",
-			\         "signTexthl": "ErrorMsg",
-			\         "virtualTexthl": "WarningMsg",
-			\     },
-			\     2: {
-			\         "name": "Warning",
-			\         "texthl": "ALEWarning",
-			\         "signText": "⚠",
-			\         "signTexthl": "ALEWarningSign",
-			\         "virtualTexthl": "Todo",
-			\     },
-			\     3: {
-			\         "name": "Information",
-			\         "texthl": "ALEInfo",
-			\         "signText": "ℹ",
-			\         "signTexthl": "ALEInfoSign",
-			\         "virtualTexthl": "Todo",
-			\     },
-			\     4: {
-			\         "name": "Hint",
-			\         "texthl": "ALEInfo",
-			\         "signText": "➤",
-			\         "signTexthl": "ALEInfoSign",
-			\         "virtualTexthl": "Todo",
-			\     },
-			\ }
 
 " Rustfmt
 let g:rustfmt_autosave = 1
@@ -151,15 +87,12 @@ autocmd FileType json
 " # HOTKEYS
 " ====================================
 " Open files/buffers
+let $FZF_DEFAULT_COMMAND = 'rg --files'
 map <C-p> :Files<CR>
 nmap <leader>; :Buffers<CR>
 
 " Quick-save
 nmap <leader>w :w<CR>
-
-" Jump to ALE errors
-nmap <silent> <leader>n :ALENext<CR>
-nmap <silent> <leader>m :ALEPrevious<CR>
 
 " ====================================
 " # EDITOR SETTINGS
@@ -174,6 +107,16 @@ set hidden
 set nowrap
 set nojoinspaces
 set nofoldenable
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+set updatetime=300
+
+set shortmess+=c
+set signcolumn=yes
 
 set splitright
 set splitbelow
@@ -234,6 +177,69 @@ nmap OO O<Esc>
 " Toggle buffers
 nnoremap <leader><leader> <c-^>
 
+" Use tab for completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+	\ pumvisible() ? "\<C-n>" :
+	\ <SID>check_back_space() ? "\<TAB>" :
+	\ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
+" Use Ctrl+Space to trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+
+" Go-tos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Show documentation
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Format selected region
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+
+augroup mygroup
+	autocmd!
+	" Setup formatexpr specified filetype(s)
+	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+	" Update signature help on jump placeholder
+	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:OR` for organize import of current buffer
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 " ====================================
 " # THEMING
 " ====================================

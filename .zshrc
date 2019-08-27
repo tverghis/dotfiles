@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH="/home/tverghis/.oh-my-zsh"
+export ZSH="/home/tverghis/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -32,7 +32,7 @@
 # DISABLE_LS_COLORS="true"
 
 # Uncomment the following line to disable auto-setting terminal title.
- DISABLE_AUTO_TITLE="true"
+DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
 # ENABLE_CORRECTION="true"
@@ -62,9 +62,12 @@
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  git
-  docker
-  docker-compose
+git
+docker
+docker-compose
+tmux
+zsh-autosuggestions
+zsh-syntax-highlighting  # This needs to be in the last position
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -109,6 +112,20 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
 
 alias vim="nvim"
 alias vi="nvim"
+alias e="nvim"
 alias open="xdg-open"
+alias ls="exa"
 
 PROMPT='%F{green}%B%1~%b%f $ '
+
+# Open files using fzf:
+fo() {
+	local out file key
+	IFS=$'\n' out=($(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
+	key=$(head -1 <<< "$out")
+	file=$(head -2 <<< "$out" | tail -1)
+	if [ -n "$file" ]; then
+		[ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-nvim} "$file"
+	fi
+}
+. /usr/share/autojump/autojump.sh
