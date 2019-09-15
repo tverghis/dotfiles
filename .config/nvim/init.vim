@@ -1,7 +1,3 @@
-" .vimrc closely mimics @jonhoo's configuration.
-" I've cherry-picked the most useful pieces for myself, and reorganized
-" them to make sense to me.
-
 " ====================================
 " # GENERAL
 " ====================================
@@ -33,7 +29,6 @@ Plug 'junegunn/fzf.vim'
 
 " Language support
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'zxqfl/tabnine-vim'
 
 " Syntax support
 Plug 'cespare/vim-toml'
@@ -46,6 +41,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 
 Plug 'Chiel92/vim-autoformat'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 
@@ -246,6 +242,5 @@ command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport
 if !has('gui_running')
 	set t_Co=256
 endif
-let base16colorspace=256
-set background=dark
-colorscheme base16-atelier-dune
+colorscheme base16-gruvbox-dark-hard
+set termguicolors
