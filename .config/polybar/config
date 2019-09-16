@@ -28,7 +28,7 @@ font-1 = "Noto Sans Mono:size=14;1"
 font-2 = "Noto Sans Symbols:size=14;1"
 font-3 = "Noto Sans Symbols2:size=14;1"
 
-modules-left = date i3
+modules-left = date weather i3
 modules-center = 
 modules-right = wlan cpu battery powermenu
 
@@ -157,6 +157,12 @@ menu-0-1 = Power off
 menu-0-1-exec = systemctl poweroff
 menu-0-2 = Reboot
 menu-0-2-exec = systemctl reboot
+
+[module/weather]
+type = custom/script
+
+exec = polybar-owm -c ~/owm.toml
+interval = 300
 
 [settings]
 screenchange-reload = true
