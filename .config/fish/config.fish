@@ -1,5 +1,7 @@
 abbr -a e nvim
 abbr -a cat bat
+abbr -a grep rg
+abbr -a rgf 'rg --files | rg'
 
 # Git shortcuts
 abbr -a glo 'git log --oneline'
