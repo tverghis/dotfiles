@@ -30,3 +30,12 @@ function fish_prompt
 	echo -n '| '
 	set_color normal
 end
+
+# Airbnb-specific config
+set -x ENV development
+set -x K2 yes
+set -x ONETOUCHGEN_ACCEPT_EULA yep
+set -x DATA_DIR $HOME/airlab/repos/data
+set -x AFDEV_HOST "i-0108c4fc978d096fa.inst.aws.airbnb.com"
+set -x AFDEV_PORT 50557
+set -x AFDEV_USER "$USER"
