@@ -28,13 +28,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
 " Language support
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Syntax support
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
 Plug 'plasticboy/vim-markdown'
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-surround'
@@ -73,12 +74,14 @@ autocmd BufWrite *.c,*.h :Autoformat
 autocmd FileType c
 	\ setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
-autocmd FileType js
-	\ setlocal tabstop=4 softtabstop=4 shiftwidth=4
-
-autocmd FileType json
+autocmd FileType js,jsx,ts,tsx,javascript
 	\ setlocal tabstop=2 softtabstop=2 shiftwidth=2
 
+autocmd FileType json,css
+	\ setlocal tabstop=2 softtabstop=2 shiftwidth=2
+
+autocmd FileType ruby,eruby
+	\ setlocal tabstop=2 softtabstop=2 shiftwidth=2
 " ====================================
 " # HOTKEYS
 " ====================================
@@ -172,70 +175,6 @@ nmap OO O<Esc>
 
 " Toggle buffers
 nnoremap <leader><leader> <c-^>
-
-" Use tab for completion with characters ahead and navigate.
-inoremap <silent><expr> <TAB>
-	\ pumvisible() ? "\<C-n>" :
-	\ <SID>check_back_space() ? "\<TAB>" :
-	\ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1] =~# '\s'
-endfunction
-
-" Use Ctrl+Space to trigger completion
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Go-tos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Show documentation
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	else
-		call CocAction('doHover')
-	endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Format selected region
-xmap <leader>f <Plug>(coc-format-selected)
-nmap <leader>f <Plug>(coc-format-selected)
-
-augroup mygroup
-	autocmd!
-	" Setup formatexpr specified filetype(s)
-	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-	" Update signature help on jump placeholder
-	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-
-" Use `:OR` for organize import of current buffer
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 " ====================================
 " # THEMING
 " ====================================
