@@ -32,7 +32,6 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
 " Syntax support
 Plug 'cespare/vim-toml'
-Plug 'rust-lang/rust.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'pangloss/vim-javascript'
 
@@ -57,11 +56,6 @@ let g:lightline = {
 function! LightlineFileName()
 	return expand('%:t') !=# '' ? @% : '[No Name]'
 endfunction
-
-" Rustfmt
-let g:rustfmt_autosave = 1
-let g:rustfmt_emit_files = 1
-let g:rustfmt_faily_silently = 0
 
 " ====================================
 " # FORMATTING
@@ -192,50 +186,14 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " position.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-
-" Go-tos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Show documentation
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	else
-		call CocAction('doHover')
-	endif
-endfunction
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
 " Rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Format selected region
-xmap <leader>f <Plug>(coc-format-selected)
-nmap <leader>f <Plug>(coc-format-selected)
-
-augroup mygroup
-	autocmd!
-	" Setup formatexpr specified filetype(s)
-	autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-	" Update signature help on jump placeholder
-	autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
+nmap <F2> <Plug>(coc-rename)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
 
-" Use `:OR` for organize import of current buffer
-command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
+" Format on save
+autocmd BufWritePost * :call CocAction('format')
 " ====================================
 " # THEMING
 " ====================================
