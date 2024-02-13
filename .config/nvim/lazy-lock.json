@@ -1,0 +1,9 @@
+{
+  "lazy.nvim": { "branch": "main", "commit": "96584866b9c5e998cbae300594d0ccfd0c464627" },
+  "nvim-treesitter": { "branch": "master", "commit": "07c8c3d84f67b1530f636dcad31971f569a3df5f" },
+  "vim-commentary": { "branch": "master", "commit": "f67e3e67ea516755005e6cccb178bc8439c6d402" },
+  "vim-fugitive": { "branch": "master", "commit": "59659093581aad2afacedc81f009ed6a4bfad275" },
+  "vim-highlightedyank": { "branch": "master", "commit": "fa3f57b097e9521ce41a66b6c7cf5d9adea70ea3" },
+  "vim-rooter": { "branch": "master", "commit": "1353fa47ee3a81083c284e28ff4f7d92655d7c9e" },
+  "vim-surround": { "branch": "master", "commit": "3d188ed2113431cf8dac77be61b842acb64433d9" }
+}
