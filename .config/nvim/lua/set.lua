@@ -24,4 +24,3 @@ vim.opt.termguicolors = true
 
 -- Keymap settings
 vim.opt.timeoutlen = 150
-

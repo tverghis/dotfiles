@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
 
 -- Escape
-vim.keymap.set({"i", "v"}, "jk", "<Esc>")
+vim.keymap.set({ "i", "v" }, "jk", "<Esc>")
 
 -- Insert new rows above/below current line
 vim.keymap.set("n", "oo", "o<Esc>")
@@ -24,3 +24,12 @@ vim.keymap.set("", "<C-x>", vim.cmd.Ex)
 -- Center search results
 vim.keymap.set("n", "n", "nzz", { silent = true })
 vim.keymap.set("n", "N", "Nzz", { silent = true })
+
+-- Swap buffers
+vim.keymap.set("n", "<leader><leader>", "<C-^>")
+
+-- Telescope
+local t = require("telescope.builtin")
+vim.keymap.set("n", "ff", t.find_files, {})
+vim.keymap.set("n", "fb", t.buffers, {})
+vim.keymap.set("n", "gd", t.lsp_definitions, {})
