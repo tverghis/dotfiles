@@ -1,5 +1,5 @@
 # General aliases
-abbr -a e zed
+abbr -a e nvim
 abbr -a cat bat
 abbr -a grep rg
 abbr -a rgf 'rg --files | rg'
@@ -11,7 +11,7 @@ abbr -a gss 'git status -s'
 abbr -a gprom 'git pull --rebase origin main'
 abbr -a gp 'git push -u origin (git branch --show-current)'
 
-set -x EDITOR zed
+set -x EDITOR nvim
 
 set __fish_git_prompt_showuntrackedfiles 'yes'
 set __fish_git_prompt_showdirtystate 'yes'
