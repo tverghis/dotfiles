@@ -10,16 +10,9 @@ vim.keymap.set({ "i", "v" }, "jk", "<Esc>")
 vim.keymap.set("n", "oo", "o<Esc>")
 vim.keymap.set("n", "OO", "O<Esc>")
 
--- Move selection up/down in visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
 -- Use home-row keys to navigate to start/end of lines
 vim.keymap.set("", "H", "^")
 vim.keymap.set("", "L", "$")
-
--- Open netrw
-vim.keymap.set("", "<C-x>", vim.cmd.Ex)
 
 -- Center search results
 vim.keymap.set("n", "n", "nzz", { silent = true })
@@ -27,9 +20,3 @@ vim.keymap.set("n", "N", "Nzz", { silent = true })
 
 -- Swap buffers
 vim.keymap.set("n", "<leader><leader>", "<C-^>")
-
--- Telescope
-local t = require("telescope.builtin")
-vim.keymap.set("n", "ff", t.find_files, {})
-vim.keymap.set("n", "fb", t.buffers, {})
-vim.keymap.set("n", "gd", t.lsp_definitions, {})

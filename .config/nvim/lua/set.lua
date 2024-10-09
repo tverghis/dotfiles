@@ -19,8 +19,16 @@ vim.opt.incsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- Enable 24-bit RGB colors
+-- Enable 24-bit RGB colors and set colorscheme
 vim.opt.termguicolors = true
+vim.cmd.colorscheme("rose-pine")
 
--- Keymap settings
-vim.opt.timeoutlen = 150
+-- Highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  group = vim.api.nvim_create_augroup("highlight_yank", {}),
+  desc = "Highlight selection on yank",
+  pattern = "*",
+  callback = function()
+    vim.highlight.on_yank({ higroup = "IncSearch", timeout = 500 })
+  end,
+})
