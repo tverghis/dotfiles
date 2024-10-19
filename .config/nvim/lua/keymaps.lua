@@ -20,3 +20,6 @@ vim.keymap.set("n", "N", "Nzz", { silent = true })
 
 -- Swap buffers
 vim.keymap.set("n", "<leader><leader>", "<C-^>")
+
+vim.keymap.set("n", "<C-f>", require("fzf-lua").files, {})
+vim.keymap.set("n", "<C-b>", require("fzf-lua").buffers, {})
