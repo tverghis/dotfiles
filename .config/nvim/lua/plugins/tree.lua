@@ -4,11 +4,11 @@ return {
     "nvim-tree/nvim-tree.lua",
     opts = {
       view = {
-	side = "right"
+        side = "right"
       },
       notify = {
-	threshold = vim.log.levels.WARNING,
-	absolute_path = false,
+        threshold = vim.log.levels.WARNING,
+        absolute_path = false,
       },
     }
   },
